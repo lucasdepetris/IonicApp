@@ -11,4 +11,27 @@
   <p>
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
   </p>
+  <button ion-button (click)="probar()" >Button</button>
+  <ion-list *ngIf="productos">
+    <button ion-item *ngFor="let prod of productos "  (click)="productoElegido(prod)" >
+      <span>{{prod.nombre }}</span>
+      <span>{{prod.id }}</span>
+    </button>  
+  </ion-list>
+  <ion-list *ngIf="sucursales">
+    <button ion-item *ngFor="let sucursal of sucursales" (click)="itemSelected(sucursal)">
+      <span>{{sucursal.banderaDescripcion }}</span>
+      <span>{{sucursal.localidad }}</span>
+      <span>{{sucursal.direccion }}</span>
+      <span>{{sucursal.distanciaDescripcion }}</span>
+      <span *ngIf="sucursal.preciosProducto.precioLista">Precio:{{sucursal.preciosProducto.precioLista }}</span>
+      <span *ngIf="!sucursal.preciosProducto.precioLista">Precio no disponible</span>    
+    </button>  
+  </ion-list>
+  <ion-list *ngIf="weather">
+    <button ion-item *ngFor="let w of weather "  (click)="productoElegido(prod)" >
+      <span>{{w.main }}</span>
+      <span>{{w.id }}</span>
+    </button>  
+  </ion-list>
 </ion-content>
