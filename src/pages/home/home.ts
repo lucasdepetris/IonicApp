@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { HTTP } from '@ionic-native/http';
+import { Geolocation } from '@ionic-native/geolocation';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service'
 
 @Component({
@@ -10,7 +11,11 @@ import { ProductoServiceProvider } from '../../providers/producto-service/produc
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController,public toastCtrl: ToastController,private http: HTTP,private productoService : ProductoServiceProvider) {
+  constructor(public navCtrl: NavController,
+    public toastCtrl: ToastController,
+    private http: HTTP,
+    private geolocation: Geolocation,
+    private productoService : ProductoServiceProvider) {
     this.presentToast()
     alert (this.productoService.getPrueba());
   }
@@ -18,6 +23,7 @@ export class HomePage {
   total;
   sucursales = [];
   weather = [];
+  ubicacion = 12;
   presentToast() {
     let toast = this.toastCtrl.create({
       message: 'User was added successfully',
@@ -73,6 +79,23 @@ export class HomePage {
          })
        .catch(error => {
                alert(error); // Error message
-             });     
+             });   
+    this.geolocation.getCurrentPosition().then((resp) => {
+              this.ubicacion = 1;
+              this.ubicacion = resp.coords.latitude;
+              alert(resp.coords.latitude);
+              let params3 = {
+                string:"coca",
+                lat:resp.coords.latitude,
+                lng:resp.coords.longitude,
+                limit:10
+              }
+              })
+              .catch((error) => {
+                                  this.ubicacion = 0;
+                                  alert('Error getting location'+ error);
+                                });
+              alert("pepe"); 
+              //this.ubicacion = 20;                       
   }
 }
