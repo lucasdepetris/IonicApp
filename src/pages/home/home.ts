@@ -79,8 +79,12 @@ export class HomePage {
          })
        .catch(error => {
                alert(error); // Error message
-             });   
-    this.geolocation.getCurrentPosition().then((resp) => {
+             });
+             let options = {
+              timeout:30000,
+              enableHighAccuracy:true
+            };         
+    let val = this.geolocation.getCurrentPosition(options).then((resp) => {
               this.ubicacion = 1;
               this.ubicacion = resp.coords.latitude;
               alert(resp.coords.latitude);
@@ -93,9 +97,10 @@ export class HomePage {
               })
               .catch((error) => {
                                   this.ubicacion = 0;
-                                  alert('Error getting location'+ error);
+                                  alert('Error getting location '+error.code+""+ error.message);
                                 });
               alert("pepe"); 
+              alert(val);
               //this.ubicacion = 20;                       
   }
 }
