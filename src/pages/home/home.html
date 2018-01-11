@@ -1,31 +1,32 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
+  <ion-navbar color="primary">
+    <ion-title class="title">
+      Buscar Productos
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-  <button ion-button (click)="probar()" >Button</button>
+  <ion-list>
+      <ion-item class="inputProducto">
+        <ion-input type="text" placeholder="Producto a buscar" [(ngModel)]="producto"></ion-input>
+      </ion-item>
+  </ion-list>
+  <button ion-button (click)="probar()" class="btnBuscar" >Buscar Producto</button>
   <ion-list *ngIf="productos">
     <button ion-item *ngFor="let prod of productos "  (click)="productoElegido(prod)" >
-      <span>{{prod.nombre }}</span>
-      <span>{{prod.id }}</span>
+      <h2 text-wrap>{{prod.nombre}}</h2>
+      <h3>{{prod.id}}</h3>
     </button>  
   </ion-list>
   <ion-list *ngIf="sucursales">
     <button ion-item *ngFor="let sucursal of sucursales" (click)="itemSelected(sucursal)">
-      <span>{{sucursal.banderaDescripcion }}</span>
-      <span>{{sucursal.localidad }}</span>
-      <span>{{sucursal.direccion }}</span>
-      <span>{{sucursal.distanciaDescripcion }}</span>
-      <span *ngIf="sucursal.preciosProducto.precioLista">Precio:{{sucursal.preciosProducto.precioLista }}</span>
-      <span *ngIf="!sucursal.preciosProducto.precioLista">Precio no disponible</span>    
+      <h2 text-wrap>{{sucursal.banderaDescripcion }}</h2>
+      <h2 text-wrap>{{sucursal.localidad }}</h2>
+      <h2 text-wrap>{{sucursal.direccion }}</h2>
+      <h2 text-wrap>{{sucursal.distanciaDescripcion }}</h2>
+      <h2 text-wrap *ngIf="sucursal.preciosProducto.precioLista">Precio:{{sucursal.preciosProducto.precioLista }}</h2>
+      <h2 text-wrap *ngIf="!sucursal.preciosProducto.precioLista">Precio no disponible</h2>    
     </button>  
   </ion-list>
   <ion-list *ngIf="weather">
@@ -35,4 +36,5 @@
     </button>  
   </ion-list>
   <button >pepe{{ ubicacion }}</button>
+  
 </ion-content>

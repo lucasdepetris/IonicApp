@@ -19,6 +19,7 @@ export class HomePage {
     this.presentToast()
     alert (this.productoService.getPrueba());
   }
+  producto;
   productos;
   total;
   sucursales = [];
@@ -32,23 +33,22 @@ export class HomePage {
     toast.present();
   }
   probar(){
-    alert("probar");
     let params = {
       string:"coca",
       lat:"-34.6012424",
       lng:"-58.377395",
       limit:10
     }
+    if(this.producto != ""){
+      params.string = this.producto;
+    }
     var re;
         re = this.productoService.getProductos(params);
         re.then(
           resolved => this.productos = (resolved),
-          error => alert(error),
-          alert(this.productos)
-        );
-        alert(this.productos);
-
-        let parametros = {
+          error => alert(error)
+          );
+    let parametros = {
           id_producto:7790895001413,
           lat:"-34.6012424",
           lng:"-58.377395",
@@ -59,13 +59,12 @@ export class HomePage {
          response.data = JSON.parse(response.data);
          this.sucursales = response.data.sucursales;
          this.total = response.data.total;
-         alert(this.total);
        })
      .catch(error => {
              alert(error); // Error message
            });
 
-           let parametros2 = {
+      /*     let parametros2 = {
             q:"New york",
             units:"metric",
             lang:"es",
@@ -79,8 +78,8 @@ export class HomePage {
          })
        .catch(error => {
                alert(error); // Error message
-             });
-             let options = {
+             });*/
+    let options = {
               timeout:30000,
               enableHighAccuracy:true
             };         
@@ -99,8 +98,9 @@ export class HomePage {
                                   this.ubicacion = 0;
                                   alert('Error getting location '+error.code+""+ error.message);
                                 });
-              alert("pepe"); 
-              alert(val);
               //this.ubicacion = 20;                       
+  }
+  onChange(){
+    alert(this.producto + "producto");
   }
 }
