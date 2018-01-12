@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
+//import { ToastController } from 'ionic-angular';
 import { HTTP } from '@ionic-native/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service'
@@ -9,6 +9,7 @@ import { producto } from '../../app/model/producto';
 import { ZBar,ZBarOptions} from '@ionic-native/zbar';
 import { Storage } from '@ionic/storage';
 import { LoadingController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 
 @Component({
   selector: 'page-home',
@@ -17,16 +18,16 @@ import { LoadingController } from 'ionic-angular';
 export class HomePage {
 
   constructor(public navCtrl: NavController,
-    public toastCtrl: ToastController,
     private http: HTTP,
     private geolocation: Geolocation,
     private productoService : ProductoServiceProvider,
     private zbar:ZBar,
     public storage: Storage,
-    public loading:LoadingController
+    public loading:LoadingController,
+    public statusBar : StatusBar
     ) {
-    this.presentToast()
-    alert (this.productoService.getPrueba());
+    // set status bar to white
+    this.statusBar.styleLightContent();
   }
   producto;
   productos;
@@ -34,13 +35,6 @@ export class HomePage {
   sucursales = [];
   weather = [];
   ubicacion = 12;
-  presentToast() {
-                    let toast = this.toastCtrl.create({
-                    message: 'User was added successfully',
-                    duration: 3000
-                    });
-                    toast.present();
-                 }
   getProductByName(){
             let params = {
                 string:"coca",
@@ -113,7 +107,10 @@ export class HomePage {
                     this.storage.set('id',result); 
                   })
               .catch((error) => {
-                           alert('Error scan'+error);
+                            if(error != "cancelled")
+                              {
+                                alert('Error scan: '+error);
+                              }
                          });
        }
 }

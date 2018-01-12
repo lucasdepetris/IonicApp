@@ -12,6 +12,7 @@ import { VerProductoPage } from '../pages/ver-producto/ver-producto';
 import { ProductoServiceProvider } from '../providers/producto-service/producto-service';
 import { ZBar} from '@ionic-native/zbar';
 
+
 @NgModule({
   declarations: [
     MyApp,
