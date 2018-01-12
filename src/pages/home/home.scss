@@ -1,7 +1,9 @@
 page-home {
 .inputProducto{
-    background-color: aquamarine;
-    
+    border-bottom: 2px red solid;
+}
+.pep{
+    border-bottom: 2px black solid;
 }
 .btnBuscar{
     width: 98%;
@@ -13,4 +15,5 @@ page-home {
     margin-left: 1%;
     margin-right: 1%; 
 }
+
 }

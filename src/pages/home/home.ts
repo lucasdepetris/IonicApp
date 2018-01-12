@@ -29,12 +29,16 @@ export class HomePage {
     // set status bar to white
     this.statusBar.styleLightContent();
   }
+  onInput(ev){
+    alert("pepe");
+  }
   producto;
   productos;
   total;
   sucursales = [];
   weather = [];
   ubicacion = 12;
+  myInput;
   getProductByName(){
             let params = {
                 string:"coca",

@@ -7,9 +7,10 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <ion-list no-lines>
       <ion-item class="inputProducto">
-        <ion-input type="text" placeholder="Producto a buscar" [(ngModel)]="producto"></ion-input>
+        <ion-input class="pep" type="text" placeholder="Producto a buscar" [(ngModel)]="producto" (keyup.enter)="getProductByName()"></ion-input>
+        <ion-icon name="search" (click)="escanear()" item-right></ion-icon>
       </ion-item>
   </ion-list>
   <button ion-button (click)="getProductByName()" class="btnBuscar" >Buscar Producto</button>
@@ -40,5 +41,4 @@
     </button>  
   </ion-list>
   <button >pepe{{ ubicacion }}</button>
-  
 </ion-content>
