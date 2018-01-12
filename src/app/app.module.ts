@@ -5,24 +5,29 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HTTP } from '@ionic-native/http';
 import { Geolocation } from '@ionic-native/geolocation';
-
+import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { VerProductoPage } from '../pages/ver-producto/ver-producto';
 import { ProductoServiceProvider } from '../providers/producto-service/producto-service';
+import { ZBar} from '@ionic-native/zbar';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    VerProductoPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    VerProductoPage
   ],
   providers: [
     StatusBar,
@@ -30,6 +35,7 @@ import { ProductoServiceProvider } from '../providers/producto-service/producto-
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HTTP,
     Geolocation,
+    ZBar,
     ProductoServiceProvider
   ]
 })

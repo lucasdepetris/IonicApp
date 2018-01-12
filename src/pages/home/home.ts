@@ -4,6 +4,11 @@ import { ToastController } from 'ionic-angular';
 import { HTTP } from '@ionic-native/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service'
+import {VerProductoPage} from '../ver-producto/ver-producto';
+import { producto } from '../../app/model/producto';
+import { ZBar,ZBarOptions} from '@ionic-native/zbar';
+import { Storage } from '@ionic/storage';
+import { LoadingController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -15,7 +20,11 @@ export class HomePage {
     public toastCtrl: ToastController,
     private http: HTTP,
     private geolocation: Geolocation,
-    private productoService : ProductoServiceProvider) {
+    private productoService : ProductoServiceProvider,
+    private zbar:ZBar,
+    public storage: Storage,
+    public loading:LoadingController
+    ) {
     this.presentToast()
     alert (this.productoService.getPrueba());
   }
@@ -26,44 +35,29 @@ export class HomePage {
   weather = [];
   ubicacion = 12;
   presentToast() {
-    let toast = this.toastCtrl.create({
-      message: 'User was added successfully',
-      duration: 3000
-    });
-    toast.present();
-  }
-  probar(){
-    let params = {
-      string:"coca",
-      lat:"-34.6012424",
-      lng:"-58.377395",
-      limit:10
-    }
-    if(this.producto != ""){
-      params.string = this.producto;
-    }
-    var re;
-        re = this.productoService.getProductos(params);
-        re.then(
-          resolved => this.productos = (resolved),
-          error => alert(error)
-          );
-    let parametros = {
-          id_producto:7790895001413,
-          lat:"-34.6012424",
-          lng:"-58.377395",
-          limit:10
-         }
-   this.http.get('https://d735s5r2zljbo.cloudfront.net/prod/producto', parametros, {})
-     .then((response)=>{
-         response.data = JSON.parse(response.data);
-         this.sucursales = response.data.sucursales;
-         this.total = response.data.total;
-       })
-     .catch(error => {
-             alert(error); // Error message
-           });
-
+                    let toast = this.toastCtrl.create({
+                    message: 'User was added successfully',
+                    duration: 3000
+                    });
+                    toast.present();
+                 }
+  getProductByName(){
+            let params = {
+                string:"coca",
+                lat:"-34.6012424",
+                lng:"-58.377395",
+                limit:10
+                } 
+            if(this.producto != "")
+              {
+                params.string = this.producto;
+              }
+            var re;
+            re = this.productoService.getProductos(params);
+            re.then(
+                      resolved => this.productos = (resolved),
+                      error => alert("error al buscar productos "+error)
+                  );
       /*     let parametros2 = {
             q:"New york",
             units:"metric",
@@ -79,28 +73,47 @@ export class HomePage {
        .catch(error => {
                alert(error); // Error message
              });*/
-    let options = {
-              timeout:30000,
-              enableHighAccuracy:true
-            };         
-    let val = this.geolocation.getCurrentPosition(options).then((resp) => {
-              this.ubicacion = 1;
-              this.ubicacion = resp.coords.latitude;
-              alert(resp.coords.latitude);
-              let params3 = {
-                string:"coca",
-                lat:resp.coords.latitude,
-                lng:resp.coords.longitude,
-                limit:10
-              }
-              })
+            let options = {
+                  timeout:30000,
+                  enableHighAccuracy:false
+                };         
+            let val = this.geolocation.getCurrentPosition(options)
+              .then((resp) => {
+                    this.ubicacion = 1;
+                    this.ubicacion = resp.coords.latitude;
+                    alert("coordenadas"+resp.coords.latitude);
+                    let params3 = {
+                          string:"coca",
+                          lat:resp.coords.latitude,
+                          lng:resp.coords.longitude,
+                          limit:10
+                        }
+                    })
               .catch((error) => {
                                   this.ubicacion = 0;
                                   alert('Error getting location '+error.code+""+ error.message);
                                 });
-              //this.ubicacion = 20;                       
+              //this.ubicacion = 20;                      
   }
   onChange(){
     alert(this.producto + "producto");
   }
+  productoElegido(producto:producto){
+    this.storage.set('id',producto.id); 
+    this.navCtrl.push(VerProductoPage);
+  }
+  escanear(){
+             let options: ZBarOptions = {
+                     flash: 'off',
+                     drawSight: false
+                      };
+              this.zbar.scan(options)
+              .then(result => {
+                    alert(result);
+                    this.storage.set('id',result); 
+                  })
+              .catch((error) => {
+                           alert('Error scan'+error);
+                         });
+       }
 }

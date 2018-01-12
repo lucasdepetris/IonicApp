@@ -12,7 +12,11 @@
         <ion-input type="text" placeholder="Producto a buscar" [(ngModel)]="producto"></ion-input>
       </ion-item>
   </ion-list>
-  <button ion-button (click)="probar()" class="btnBuscar" >Buscar Producto</button>
+  <button ion-button (click)="getProductByName()" class="btnBuscar" >Buscar Producto</button>
+  <button ion-button icon-right (click)="escanear()" class="btnEscanear">
+    Escanear
+    <ion-icon name="qr-scanner"></ion-icon>
+  </button>
   <ion-list *ngIf="productos">
     <button ion-item *ngFor="let prod of productos "  (click)="productoElegido(prod)" >
       <h2 text-wrap>{{prod.nombre}}</h2>
