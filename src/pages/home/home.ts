@@ -75,7 +75,7 @@ export class HomePage {
               .then((resp) => {
                     this.ubicacion = 1;
                     this.ubicacion = resp.coords.latitude;
-                    alert("coordenadas"+resp.coords.latitude);
+                    alert("coordenadas: "+resp.coords.latitude);
                     let params3 = {
                           string:"coca",
                           lat:resp.coords.latitude,
